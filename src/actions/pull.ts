@@ -1,19 +1,17 @@
 // pull 커맨드 진입점.
 // fetchCollection → downloadFiles 순서로 실행한다.
 
-import 'dotenv/config';
 import { writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { createMemexFetcher } from '@rebel9/memex-fetcher';
+import { promptConfig } from '../config';
 import { fetchCollection } from './pull/fetchCollection/index';
 import { downloadFiles } from './pull/downloadFiles/index';
 
 const OUT_DIR = './data';
 
 export async function pull() {
-  const token = process.env.MEMEX_TOKEN!;
-  const projectId = process.env.MEMEX_PROJECT_ID!;
-  const modelKeys = process.env.MEMEX_MODEL_KEYS!.split(',');
+  const { token, projectId, modelKeys } = await promptConfig();
 
   const fetcher = createMemexFetcher(token);
 
