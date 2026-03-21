@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { downloadFiles } from '../index';
@@ -16,8 +16,11 @@ for (const modelKey of MODEL_KEYS) {
   items.push(...JSON.parse(raw));
 }
 
-await downloadFiles(
+const fileMap = await downloadFiles(
   items,
   join(resultsDir, 'files'),
   join(resultsDir, 'skipped-urls.json'),
 );
+
+writeFileSync(join(resultsDir, 'file-map.json'), JSON.stringify(fileMap, null, 2));
+console.log(`file-map saved: ${join(resultsDir, 'file-map.json')}`);

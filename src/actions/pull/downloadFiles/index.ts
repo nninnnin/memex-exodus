@@ -36,7 +36,7 @@ export async function downloadFiles(
   items: unknown[],
   outDir: string,
   skippedPath: string,
-) {
+): Promise<Record<string, string>> {
   mkdirSync(outDir, { recursive: true });
 
   const allUrls = items.flatMap(item => extractUrls(item));
@@ -47,6 +47,8 @@ export async function downloadFiles(
 
   writeFileSync(skippedPath, JSON.stringify(skipped, null, 2));
   console.log(`skipped ${skipped.length} URLs → ${skippedPath}`);
+
+  const fileMap: Record<string, string> = {};
 
   for (const url of toDownload) {
     const pathname = new URL(url).pathname;
@@ -60,6 +62,9 @@ export async function downloadFiles(
     }
 
     await pipeline(Readable.fromWeb(res.body as any), createWriteStream(dest));
+    fileMap[url] = dest;
     console.log(`downloaded: ${filename}`);
   }
+
+  return fileMap;
 }
