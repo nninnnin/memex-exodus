@@ -4,14 +4,14 @@
 import { writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { createMemexFetcher } from '@rebel9/memex-fetcher';
-import { promptConfig } from '../config';
+import { promptPullConfig } from '../config/pull';
 import { fetchCollection } from './pull/fetchCollection/index';
 import { downloadFiles } from './pull/downloadFiles/index';
 
 const OUT_DIR = './data';
 
 export async function pull() {
-  const { token, projectId, modelKeys } = await promptConfig();
+  const { token, projectId, modelKeys } = await promptPullConfig();
 
   const fetcher = createMemexFetcher(token);
 
