@@ -6,7 +6,8 @@
   "scripts": {
     "pull": "tsx src/index.ts pull",
     "push": "tsx src/index.ts push",
-    "dump": "tsx src/index.ts dump"
+    "dump": "tsx src/index.ts dump",
+    "clear": "rm -rf data"
   },
   "keywords": [],
   "author": "",

@@ -1,11 +1,14 @@
 import 'dotenv/config';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, rmSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { downloadFiles } from '../index';
 
 const dir = dirname(fileURLToPath(import.meta.url));
 const resultsDir = join(dir, 'results');
+
+rmSync(resultsDir, { recursive: true, force: true });
+mkdirSync(resultsDir, { recursive: true });
 
 const MODEL_KEYS = process.env.MEMEX_MODEL_KEYS!.split(',');
 const fetchResultsDir = join(dir, '../../fetchCollection/runner/results');
