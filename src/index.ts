@@ -20,7 +20,7 @@ program
 
 program
   .command('push')
-  .description('PostgreSQL + S3에 이식')
+  .description('컬렉션 데이터 → Neon PostgreSQL INSERT')
   .action(push);
 
 program
