@@ -35,14 +35,33 @@ function inferSchema(items: Item[]): Record<string, PgType> {
   );
 }
 
+function replaceInString(value: string, s3Map: Record<string, string>): string {
+  return s3Map[value] ?? value;
+}
+
+function replaceInArray(arr: unknown[], s3Map: Record<string, string>): unknown[] {
+  return arr.map(item => replaceUrls(item, s3Map));
+}
+
+function replaceInObject(
+  obj: Record<string, unknown>,
+  s3Map: Record<string, string>,
+): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, val]) => [key, replaceUrls(val, s3Map)]),
+  );
+}
+
 function replaceUrls(value: unknown, s3Map: Record<string, string>): unknown {
-  if (typeof value === 'string') return s3Map[value] ?? value;
-  if (Array.isArray(value)) return value.map(v => replaceUrls(v, s3Map));
-  if (value !== null && typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value as Record<string, unknown>).map(([k, v]) => [k, replaceUrls(v, s3Map)]),
-    );
-  }
+  const isNullish = value == null;
+  const isString = typeof value === 'string';
+  const isArray = Array.isArray(value);
+  const isObject = typeof value === 'object';
+
+  if (isNullish) return value;
+  if (isString) return replaceInString(value, s3Map);
+  if (isArray) return replaceInArray(value, s3Map);
+  if (isObject) return replaceInObject(value as Record<string, unknown>, s3Map);
   return value;
 }
 
