@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm ls:*)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(len\\(d\\)\\)\")",
+      "Bash(python3 -c \":*)"
+    ],
+    "additionalDirectories": [
+      "/Users/donggyulee/Projects/memex-exodus/data",
+      "/Users/donggyulee/Projects/memex-exodus/src/actions/pull/downloadFiles/runner/results"
+    ]
+  }
+}

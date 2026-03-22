@@ -5,7 +5,7 @@
 import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, basename, extname } from 'path';
 import { promptPushConfig } from '../../config/push';
-import { insertData } from './insertData/index';
+import { insertData } from './utils/insertData';
 
 const SKIP_FILES = new Set(['file-map.json', 's3-map.json', 'skipped-urls.json']);
 

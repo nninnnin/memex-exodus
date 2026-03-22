@@ -5,8 +5,8 @@ import { writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { createMemexFetcher } from '@rebel9/memex-fetcher';
 import { promptPullConfig } from '../../config/pull';
-import { fetchCollection } from './fetchCollection/index';
-import { downloadFiles } from './downloadFiles/index';
+import { fetchCollection } from './utils/fetchCollection';
+import { downloadFiles } from './utils/downloadFiles';
 
 export async function pull() {
   const { token, projectId, projectName, modelKeys } = await promptPullConfig();

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { fetchCollection } from './index';
+import { fetchCollection } from './fetchCollection';
 
 function makeFetcher(totalPages: number, items: unknown[]) {
   const pageSize = 100;

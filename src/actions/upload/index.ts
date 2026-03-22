@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { promptUploadConfig } from '../../config/upload';
-import { uploadFiles } from './uploadFiles/index';
+import { uploadFiles } from './utils/uploadFiles';
 
 export async function upload() {
   const { projectName, accessKeyId, secretAccessKey, bucket, region, prefix } =

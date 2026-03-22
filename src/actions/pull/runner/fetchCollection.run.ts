@@ -3,7 +3,7 @@ import { writeFileSync, rmSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { createMemexFetcher } from '@rebel9/memex-fetcher';
-import { fetchCollection } from '../index';
+import { fetchCollection } from '../utils/fetchCollection';
 
 const TOKEN = process.env.MEMEX_TOKEN!;
 const PROJECT_ID = process.env.MEMEX_PROJECT_ID!;
