@@ -1,7 +1,7 @@
-import { readFileSync, writeFileSync, existsSync } from "fs";
-import { join } from "path";
-import { promptUploadConfig } from "../config/upload";
-import { uploadFiles } from "./upload/uploadFiles/index";
+import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { join } from 'path';
+import { promptUploadConfig } from '../../config/upload';
+import { uploadFiles } from './uploadFiles/index';
 
 export async function upload() {
   const { projectName, accessKeyId, secretAccessKey, bucket, region, prefix } =
@@ -13,7 +13,7 @@ export async function upload() {
   }
 
   const fileMap: Record<string, string> = JSON.parse(
-    readFileSync(join(DATA_DIR, "file-map.json"), "utf-8"),
+    readFileSync(join(DATA_DIR, 'file-map.json'), 'utf-8'),
   );
 
   console.log(`uploading ${Object.keys(fileMap).length} files...`);
@@ -27,6 +27,6 @@ export async function upload() {
     prefix,
   );
 
-  writeFileSync(join(DATA_DIR, "s3-map.json"), JSON.stringify(s3Map, null, 2));
+  writeFileSync(join(DATA_DIR, 's3-map.json'), JSON.stringify(s3Map, null, 2));
   console.log(`done. s3-map.json saved.`);
 }
