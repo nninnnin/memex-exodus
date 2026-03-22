@@ -1,13 +1,16 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join } from "path";
 import { promptUploadConfig } from "../config/upload";
 import { uploadFiles } from "./upload/uploadFiles/index";
 
-const DATA_DIR = "./data";
-
 export async function upload() {
-  const { accessKeyId, secretAccessKey, bucket, region, prefix } =
+  const { projectName, accessKeyId, secretAccessKey, bucket, region, prefix } =
     await promptUploadConfig();
+  const DATA_DIR = `./data/${projectName}`;
+
+  if (!existsSync(DATA_DIR)) {
+    throw new Error(`프로젝트 폴더가 없습니다: ${DATA_DIR}\npull을 먼저 실행하세요.`);
+  }
 
   const fileMap: Record<string, string> = JSON.parse(
     readFileSync(join(DATA_DIR, "file-map.json"), "utf-8"),

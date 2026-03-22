@@ -8,10 +8,9 @@ import { promptPullConfig } from '../config/pull';
 import { fetchCollection } from './pull/fetchCollection/index';
 import { downloadFiles } from './pull/downloadFiles/index';
 
-const OUT_DIR = './data';
-
 export async function pull() {
-  const { token, projectId, modelKeys } = await promptPullConfig();
+  const { token, projectId, projectName, modelKeys } = await promptPullConfig();
+  const OUT_DIR = `./data/${projectName}`;
 
   const fetcher = createMemexFetcher(token);
 

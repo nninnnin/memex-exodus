@@ -2,16 +2,20 @@
 // data/*.json 컬렉션 데이터와 data/s3-map.json을 읽어
 // URL을 S3 URL로 치환한 뒤 Neon PostgreSQL에 INSERT한다.
 
-import { readFileSync, readdirSync } from 'fs';
+import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, basename, extname } from 'path';
 import { promptPushConfig } from '../config/push';
 import { insertData } from './push/insertData/index';
 
-const DATA_DIR = './data';
 const SKIP_FILES = new Set(['file-map.json', 's3-map.json', 'skipped-urls.json']);
 
 export async function push() {
-  const { dbUrl } = await promptPushConfig();
+  const { projectName, dbUrl } = await promptPushConfig();
+  const DATA_DIR = `./data/${projectName}`;
+
+  if (!existsSync(DATA_DIR)) {
+    throw new Error(`프로젝트 폴더가 없습니다: ${DATA_DIR}\npull을 먼저 실행하세요.`);
+  }
 
   const s3Map: Record<string, string> = JSON.parse(
     readFileSync(join(DATA_DIR, 's3-map.json'), 'utf-8'),
